@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toán 11 - Ôn tập Phần C & D (Hoàn thiện nhất)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .katex { font-size: 1.1em; }
+        .solution-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .step-badge { background: #dbeafe; color: #1e40af; padding: 2px 12px; border-radius: 99px; font-weight: 800; font-size: 0.7rem; text-transform: uppercase; margin-right: 8px; display: inline-block; border: 1px solid #bfdbfe; }
+        .tab-active { background-color: #1e293b; color: white; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
+        .hidden-solution { display: none; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 10px; }
+        input:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+        .correct-anim { animation: success 0.5s ease-out; }
+        @keyframes success { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+        .math-box { background: rgba(255, 255, 255, 0.9); padding: 1.5rem; border-radius: 1.5rem; border: 1px solid #e2e8f0; margin: 1rem 0; box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05); }
+    </style>
+</head>
+<body class="min-h-screen custom-scrollbar">
+
+    <header class="bg-white border-b border-slate-200 py-12 sticky top-0 z-50 shadow-sm text-center">
+        <div class="container mx-auto px-6">
+            <h1 class="text-3xl md:text-4xl font-black tracking-tight uppercase mb-2 text-slate-900 px-4">Luyện Tập Toán 11 HK2 (C & D)</h1>
+            <p class="text-slate-500 font-medium tracking-wide max-w-3xl mx-auto italic text-balance px-4 text-sm md:text-base">Hệ thống bài tập đầy đủ nội dung nguyên bản - Lời giải chi tiết theo từng bước.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-10 max-w-5xl">
+        <div class="flex p-1 bg-slate-100 rounded-2xl mb-12 max-w-lg mx-auto border border-slate-200 shadow-inner">
+            <button id="tabC" onclick="window.switchTab('C')" class="flex-1 py-4 font-extrabold rounded-xl transition-all tab-active text-sm md:text-base">Phần C: Trả lời ngắn</button>
+            <button id="tabD" onclick="window.switchTab('D')" class="flex-1 py-4 font-extrabold rounded-xl transition-all text-slate-400 hover:text-slate-600 text-sm md:text-base">Phần D: Tự luận</button>
+        </div>
+
+        <div id="questionList" class="space-y-12 pb-24"></div>
+    </main>
+
+    <footer class="py-12 text-center text-slate-400 text-xs font-bold uppercase tracking-widest border-t border-slate-100 bg-white">
+        &copy; 2026 Đề Cương Toán 11 HK2 - Master Revision Tool
+    </footer>
+
+    <script>
+        const dataC = [
+            { id: "c1", q: "Câu 1: Có bao nhiêu giá trị nguyên của tham số $m$ để hàm số $y = \\log(x^{2} - 2mx + 4)$ xác định với mọi $x$ thuộc $\\mathbb{R}$?", ans: "3",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Điều kiện xác định: $x^{2} - 2mx + 4 > 0, \\forall x \\in \\mathbb{R}$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Xét tam thức bậc hai $f(x) = x^2 - 2mx + 4$ có hệ số $a = 1 > 0$. Để $f(x) > 0, \\forall x$ thì biệt thức $\\Delta' < 0$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> $\\Delta' = (-m)^2 - 1 \\cdot 4 = m^2 - 4$. Giải $m^2 - 4 < 0 \\Leftrightarrow -2 < m < 2$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> Các giá trị nguyên thỏa mãn: $m \\in \\{-1; 0; 1\\}$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 3</div>" },
+            { id: "c2", q: "Câu 2: Hàm số $y = \\log_{a}x$ và $y = \\log_{b}x$ có đồ thị như hình vẽ dưới đây (Trang 8). Đường thẳng $y=3$ cắt hai đồ thị tại các điểm có hoành độ $x_{1}, x_{2}$. Biết $x_{2}=2x_{1}$ tính $\\frac{a^{3}}{b^{3}}$.", ans: "2",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Từ đồ thị: $y=3$ cắt $y = \\log_b x$ tại $x_1 \\Rightarrow 3 = \\log_b x_1 \\Rightarrow x_1 = b^3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> $y=3$ cắt $y = \\log_a x$ tại $x_2 \\Rightarrow 3 = \\log_a x_2 \\Rightarrow x_2 = a^3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Theo giả thiết $x_2 = 2x_1 \\Rightarrow a^3 = 2b^3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> Chia hai vế cho $b^3$: $\\frac{a^3}{b^3} = 2$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 2</div>" },
+            { id: "c3", q: "Câu 3: Cho hình chóp $S.ABC$ có $SA$ vuông góc với mặt phẳng $(ABC)$, $SA=2a$, tam giác $ABC$ vuông tại $B$, $AB=a\\sqrt{3}$ và $BC=a$. Tính góc giữa hình chiếu của đường thẳng $SC$ và mặt phẳng $(SAB)$ và $AB$ bằng bao nhiêu độ (làm tròn đến hàng phần chục)?", ans: "49,1",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Chứng minh hình chiếu: $BC \\perp AB$ và $BC \\perp SA$ $\\Rightarrow BC \\perp (SAB)$. Vậy hình chiếu của $SC$ lên $(SAB)$ là đoạn $SB$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Góc cần tìm là $\\angle SBA$ (góc giữa hình chiếu $SB$ và đường thẳng $AB$).</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Xét $\\triangle SAB$ vuông tại $A$: $\\tan \\angle SBA = \\frac{SA}{AB} = \\frac{2a}{a\\sqrt{3}} = \\frac{2}{\\sqrt{3}}$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> $\\angle SBA = \\arctan(2/\\sqrt{3}) \\approx 49,106^{\\circ}$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 49,1</div>" },
+            { id: "c4", q: "Câu 4: Cho hình chóp $O.ABC$ có $OA$ vuông góc với mặt phẳng $(ABC)$, $OA = \\frac{3a}{2}$, tam giác $ABC$ đều cạnh bằng $a$. Gọi $H$ là trung điểm $BC$. Góc giữa đường thẳng $OH$ và mặt phẳng $(ABC)$ bằng bằng bao nhiêu độ?", ans: "60",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Hình chiếu của $O$ lên $(ABC)$ là $A$, hình chiếu của $OH$ là $AH$. Góc cần tìm là $\\angle OHA$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Tam giác $ABC$ đều cạnh $a$, $H$ là trung điểm $BC$ nên $AH = \\frac{a\\sqrt{3}}{2}$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Xét $\\triangle OAH$ vuông tại $A$: $\\tan \\angle OHA = \\frac{OA}{AH} = \\frac{3a/2}{a\\sqrt{3}/2} = \\sqrt{3}$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> $\\Rightarrow \\angle OHA = 60^{\\circ}$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 60</div>" },
+            { id: "c5", q: "Câu 5: Cho tứ diện $OABC$ có $OA, OB, OC$ đôi một vuông góc và $OB=OC=a\\sqrt{6}, OA=a$. Số đo góc nhị diện $[A, BC, O]$ bằng bao nhiêu độ?", ans: "30",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Gọi $M$ là trung điểm $BC$. Vì $\\Delta OBC$ vuông cân tại $O$ nên $OM \\perp BC$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Vì $OA \\perp (OBC) \\Rightarrow OA \\perp BC$. Kết hợp với $OM \\perp BC$, ta có $BC \\perp (OAM) \\Rightarrow BC \\perp AM$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Góc nhị diện là $\\angle AMO$. Tính $OM = \\frac{1}{2} BC = \\frac{1}{2} \\sqrt{(a\\sqrt{6})^2 + (a\\sqrt{6})^2} = a\\sqrt{3}$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> Xét $\\triangle OAM$: $\\tan \\angle AMO = \\frac{OA}{OM} = \\frac{a}{a\\sqrt{3}} = \\frac{1}{\\sqrt{3}}$. Suy ra $\\angle AMO = 30^{\\circ}$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 30</div>" },
+            { id: "c6", q: "Câu 6: Một khay đá viên gồm 6 ngăn nhỏ có dạng là các hình chóp cụt đều với miệng và đáy là hình vuông. Ta đo được độ dài cạnh đáy nhỏ, cạnh đáy lớn lần lượt bằng 1 cm, 3 cm và chiều cao mặt bên bằng $\\sqrt{2}$ cm. Tính cosin góc giữa đường chéo của viên đá với cạnh đáy của viên đá (làm tròn đến 0,01).", ans: "0,67",
+              s: "<div class='math-box'><div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Gọi đáy nhỏ $A'B'C'D'$ ($a=1$) và đáy lớn $ABCD$ ($b=3$). Trung đoạn $M'M = \\sqrt{2}$. Kẻ $M'H \\perp AB \\Rightarrow MH = (3-1)/2 = 1$ cm. Chiều cao đá $h = \\sqrt{(\\sqrt{2})^2 - 1^2} = 1$ cm.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Chọn đường chéo $AC'$ và cạnh đáy $AB$. Gọi $C'_1$ là hình chiếu $C'$ lên đáy lớn. $AC'_1 = \\sqrt{(3-1)^2 + (3-1)^2} = \\sqrt{8}$. Đường chéo đá $AC' = \\sqrt{(\\sqrt{8})^2 + 1^2} = 3$ cm.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Xét hình chiếu $C'_1$ của $C'$, ta có $BC'_1 = \\sqrt{1^2 + 2^2} = \\sqrt{5}$. Cạnh $BC' = \\sqrt{(\\sqrt{5})^2 + 1^2} = \\sqrt{6}$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> Trong $\\triangle ABC'$, áp dụng định lý Cosin: $BC'^2 = AB^2 + AC'^2 - 2 \\cdot AB \\cdot AC' \\cos\\alpha \\Rightarrow 6 = 9+9-18\\cos\\alpha \\Rightarrow \\cos\\alpha = 12/18 = 2/3$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,67</div></div>" },
+            { id: "c7", q: "Câu 7: Một mặt phẳng nghiêng vận chuyển đồ lên độ cao 1m, góc nghiêng của mặt phẳng nghiêng so với mặt phẳng nằm ngang là $30^{\\circ}$, chiều rộng mặt phẳng nghiêng là 1m. Tính $\\sin$ của góc giữa đường thẳng $CA$ (đường chéo của mặt phẳng nghiêng) và mặt phẳng nằm ngang $(Q)$?", ans: "0,45",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Chiều dài cạnh nghiêng $CB$ (cạnh huyền của tam giác chiều cao): $CB = 1 / \\sin 30^{\\circ} = 2$ m.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Xét mặt phẳng nghiêng có chiều rộng $AB=1$m và chiều dài $CB=2$m. Đường chéo $CA = \\sqrt{2^2 + 1^2} = \\sqrt{5}$ m.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Sin góc giữa $CA$ và mặt ngang $(Q)$ là tỉ lệ chiều cao (1m) chia cho độ dài đường chéo $CA$: $\\sin \\alpha = 1 / \\sqrt{5} \\approx 0,447$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,45</div>" },
+            { id: "c8", q: "Câu 8: Lớp 11A1 có 50 học sinh, trong đó có 32 bạn thích học môn Toán, 17 bạn thích học môn Lịch Sử và 8 bạn thích cả hai môn trên. Chọn ngẫu nhiên một bạn trong lớp. Xác suất để bạn đó không thích cả môn Toán và môn Lịch Sử là bao nhiêu?", ans: "0,18",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Số học sinh thích ít nhất một trong hai môn (Toán hoặc Sử): $n(T \\cup S) = 32 + 17 - 8 = 41$ học sinh.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Số học sinh không thích môn nào trong hai môn trên: $n = 50 - 41 = 9$ học sinh.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Xác suất cần tìm: $P = 9/50 = 0,18$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,18</div>" },
+            { id: "c9", q: "Câu 9: Một hộp có chứa một số quả cầu gồm bốn màu xanh, vàng, đỏ, trắng. Lấy ngẫu nhiên một quả cầu từ hộp, biết xác suất lấy được một quả cầu màu xanh bằng $1/4$, xác suất lấy được một quả cầu màu vàng bằng $1/3$. Tính xác suất để lấy được một quả cầu màu xanh hoặc một quả cầu màu vàng (làm tròn đến 0,01)?", ans: "0,58",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Hai biến cố 'lấy quả xanh' và 'lấy quả vàng' là hai biến cố xung khắc (không thể xảy ra cùng lúc).</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Xác suất lấy được xanh hoặc vàng: $P = P(X) + P(V) = 1/4 + 1/3 = 7/12$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Làm tròn kết quả: $7/12 \\approx 0,5833$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,58</div>" },
+            { id: "c10", q: "Câu 10: Trong một bình có 2 viên bi trắng và 8 viên bi đen. Người ta bốc 2 viên bi bỏ ra ngoài rồi bốc tiếp một viên bi thứ ba. Tính xác suất để viên bi thứ ba là bi trắng.", ans: "0,2",
+              s: "<div class='math-box'><div class='mb-3'><span class='step-badge'>BƯỚC 1</span> TH1: 2 viên đầu đều trắng ($P_1 = C_2^2/C_{10}^2 = 1/45$). Trong bình còn 0 trắng, $P_{lần 3} = 0$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> TH2: 1 trắng, 1 đen ($P_2 = (C_2^1 \\cdot C_8^1)/C_{10}^2 = 16/45$). Trong bình còn 1 trắng, 7 đen $\\Rightarrow P_{lần 3} = 1/8$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> TH3: 2 đen ($P_3 = C_8^2/C_{10}^2 = 28/45$). Trong bình còn 2 trắng, 6 đen $\\Rightarrow P_{lần 3} = 2/8 = 1/4$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> $P = (1/45 \\cdot 0) + (16/45 \\cdot 1/8) + (28/45 \\cdot 1/4) = 2/45 + 7/45 = 9/45 = 0,2$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,2</div></div>" },
+            { id: "c11", q: "Câu 11: Cho hai biến cố độc lập $A$ và $B$. Biết $P(A)=1/4$, $P(A \\cup B)=1/2$. Khi đó $P(B)$ bằng bao nhiêu (làm tròn đến hàng phần chục)?", ans: "0,3",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Vì $A, B$ độc lập nên $P(A \\cap B) = P(A) \\cdot P(B)$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Công thức cộng: $P(A \\cup B) = P(A) + P(B) - P(A) \\cdot P(B)$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> $1/2 = 1/4 + P(B) - 1/4 P(B) \\Leftrightarrow 1/4 = 3/4 P(B) \\Rightarrow P(B) = 1/3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> Làm tròn: $1/3 \\approx 0,33 \\Rightarrow 0,3$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,3</div>" },
+            { id: "c12", q: "Câu 12: Có 2 hộp, hộp I đựng 4 gói quà màu đỏ và 6 gói quà màu xanh, hộp II đựng 2 gói quà màu đỏ và 8 gói quà màu xanh. Gieo một con súc sắc, nếu được mặt 6 chấm thì lấy một gói quà từ hộp I, nếu mặt khác thì lấy một gói quà từ hộp II. Xác suất để lấy được gói quà màu đỏ bằng bao nhiêu (làm tròn kết quả đến hàng phần trăm)?", ans: "0,23",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Xác suất gieo xúc sắc: $P(\\text{Hộp I}) = 1/6$; $P(\\text{Hộp II}) = 5/6$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Xác suất lấy quà đỏ trong từng hộp: $P(Đ|I) = 4/10$; $P(Đ|II) = 2/10$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Áp dụng công thức xác suất đầy đủ: $P(Đ) = (1/6 \\cdot 4/10) + (5/6 \\cdot 2/10) = 14/60$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> $14/60 = 7/30 \\approx 0,233$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,23</div>" },
+            { id: "c13", q: "Câu 13: Một cuộc thăm dò về sự hâm mộ đối với hai đội bóng đá X và Y cho thấy hâm mộ đội X là 22%, hâm mộ đội Y là 39%, trong đó có 7% hâm mộ cả hai đội bóng đá X và Y. Tính xác suất chọn được người không hâm mộ đội nào trong hai đội bóng đá X và Y?", ans: "0,46",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Xác suất hâm mộ ít nhất một đội: $P(X \\cup Y) = 22\\% + 39\\% - 7\\% = 54\\% = 0,54$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Xác suất không hâm mộ đội nào là biến cố đối: $P = 1 - 0,54 = 0,46$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,46</div>" },
+            { id: "c14", q: "Câu 14: Tại một trường trung học phổ thông X, có 12% học sinh học giỏi môn Tiếng Anh, 35% học sinh học giỏi môn Toán và 8% học sinh học giỏi cả hai môn Toán và Tiếng Anh. Chọn ngẫu nhiên một học sinh, tính xác suất để chọn được học sinh không giỏi môn nào trong hai môn Toán và Tiếng Anh.", ans: "0,61",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Xác suất giỏi ít nhất một môn: $P = 12\\% + 35\\% - 8\\% = 39\\% = 0,39$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Xác suất không giỏi môn nào là biến cố đối: $P' = 1 - 0,39 = 0,61$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,61</div>" },
+            { id: "c15", q: "Câu 15: Cho hàm số $f(x)=1/x$ có đồ thị (C) và điểm $M(1;1) \\in (C)$. Phương trình tiếp tuyến với (C) tại điểm $M$ có dạng $y=ax+b$. Tính $T=2a+b$.", ans: "0",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Đạo hàm $f'(x) = -1/x^2$. Hệ số góc tại $x=1$ là $a = f'(1) = -1$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Phương trình tiếp tuyến tại $M(1;1)$: $y - 1 = -1(x - 1) \\Rightarrow y = -x + 2$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Suy ra $a = -1, b = 2$. Tính $T = 2(-1) + 2 = 0$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0</div>" },
+            { id: "c16", q: "Câu 16: Cho hàm số $f(x)=\\frac{x-1}{x+1}$ có đồ thị (C). Phương trình tiếp tuyến với (C) vuông góc với đường thẳng $\\Delta: y=-\\frac{1}{2}x+3$ có dạng $y=ax+b$. Tính $T=a^{2}.b$. Biết tọa độ tiếp điểm có hoành độ âm.", ans: "28",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Tiếp tuyến $\\perp \\Delta$ có $k_1 = -1/2 \\Rightarrow k_{tt} = a = 2$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Đạo hàm $f'(x) = 2/{(x+1)}^2$. Giải $2/{(x+1)}^2 = 2 \\Rightarrow {(x+1)}^2 = 1 \\Rightarrow x=0$ hoặc $x=-2$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Chọn $x = -2$ (hoành độ âm) $\\Rightarrow y = 3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> PTTT: $y - 3 = 2(x + 2) \\Rightarrow y = 2x + 7 \\Rightarrow b = 7$. Tính $T = 2^2 \\cdot 7 = 28$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 28</div>" },
+            { id: "c17", q: "Câu 17: Vận tốc của một chất điểm chuyển động được biểu thị bởi công thức $v(t)=8t+3t^{2}$, trong đó $t>0$, $t$ tính bằng giây và $v(t)$ tính bằng m/s. Tìm gia tốc của chất điểm tại thời điểm mà vận tốc chuyển động là 11 m/s.", ans: "14",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Tìm thời điểm $t$: Giải $3t^2 + 8t = 11 \\Leftrightarrow 3t^2 + 8t - 11 = 0 \\Rightarrow t = 1$ (s).</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Gia tốc $a(t) = v'(t) = 8 + 6t$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Tại $t = 1$, $a(1) = 8 + 6(1) = 14$ m/s².</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 14</div>" },
+            { id: "c18", q: "Câu 18: Một chuyển động theo quy luật là $s=-\\frac{1}{2}t^{3}+3t^{2}+20$ với $t$ giây là khoảng thời gian tính từ khi vật bắt đầu chuyển động và $s$ (mét) là quãng đường vật di chuyển được. Quãng đường vật đi được bắt đầu từ lúc vật bắt đầu chuyển động tới thời điểm vật đạt được vận tốc lớn nhất bằng bao nhiêu?", ans: "8",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Vận tốc $v(t) = s'(t) = -1,5t^2 + 6t$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Vận tốc đạt cực đại khi $v'(t) = a(t) = -3t + 6 = 0 \\Rightarrow t = 2$ (s).</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Quãng đường tại $t=2$ là $s(2) = -0,5 \\cdot 8 + 3 \\cdot 4 + 20 = 28$ m.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> Quãng đường vật đi được từ lúc đầu ($t=0, s=20$) là $28 - 20 = 8$ m.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 8</div>" }
+        ];
+
+        const dataD = [
+            { id: "d1", q: "Câu 1: Một cái hộp hình lập phương, bên trong nó đựng một mô hình đồ chơi có dạng hình chóp tứ giác đều mà đỉnh của hình chóp đó trùng với tâm của một mặt chiếc hộp, giả sử hình vuông đáy của hình chóp trùng với một mặt của chiếc hộp (hai mặt này đối nhau). Biết cạnh hộp bằng 30cm, thể tích phần không gian bên trong hộp không bị chiếm bởi mô hình đạt bao nhiêu $dm^{3}$?", ans: "18",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Đổi đơn vị: 30 cm = 3 dm. Thể tích hình lập phương: $V_L = 3^3 = 27$ $dm^3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Hình chóp đều có chiều cao $h = 3$ dm và cạnh đáy $a = 3$ dm. Thể tích: $V_C = \\frac{1}{3} \\cdot 3^2 \\cdot 3 = 9$ $dm^3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Thể tích phần trống: $V = 27 - 9 = 18$ $dm^3$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 18</div>" },
+            { id: "d2", q: "Câu 2: Một khối rubik $3 \\times 3$ cạnh bằng 6cm. Tìm thể tích khối rubik đó.", ans: "216",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Thể tích hình lập phương được tính bằng công thức $V = a^3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Thay $a = 6$ vào: $V = 6^3 = 216$ cm³.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 216</div>" },
+            { id: "d3", q: "Câu 3: Xác suất lây bệnh là 0,75 nếu không đeo khẩu trang và 0,05 nếu có đeo. Ông X tiếp xúc bệnh hai lần (1 lần có đeo, 1 lần không). Tính xác suất ông X bị bệnh (làm tròn hàng phần mười).", ans: "0,8",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Xác suất không lây lần 1 (không đeo): $1 - 0,75 = 0,25$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Xác suất không lây lần 2 (có đeo): $1 - 0,05 = 0,95$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Xác suất không bị bệnh sau cả 2 lần: $0,25 \\cdot 0,95 = 0,2375$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 4</span> Xác suất bị bệnh là biến cố đối: $P = 1 - 0,2375 = 0,7625 \\approx 0,8$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,8</div>" },
+            { id: "d4", q: "Câu 4: Hộp 10 bóng gồm màu xanh và vàng. Lấy ngẫu nhiên 2 quả trả vào hộp, lặp lại 2 lần. Xác suất chọn được 2 quả bóng màu xanh là 1/15 và xác suất chọn được 1 quả cầu xanh và 1 quả cầu vàng là 7/15. Tính số kết quả thuận lợi cho biến cố chọn được 4 quả bóng màu vàng?", ans: "441",
+              s: "<div class='math-box'><div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Gọi $n$ là số bóng xanh. $P(2X) = C_n^2 / C_{10}^2 = 1/15 \\Rightarrow n(n-1) = 6 \\Rightarrow n=3$. Suy ra có 7 bóng vàng.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Mỗi lần chọn 2 quả, số cách lấy 2 vàng là $C_7^2 = 21$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Lấy 2 lần độc lập, số kết quả thuận lợi cho 4 vàng là $21 \\cdot 21 = 441$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 441</div></div>" },
+            { id: "d5", q: "Câu 5: Cho $A, B$ độc lập. $P(A)+P(B)=1,1$ và $P(AB)=0,3$. Tính xác suất $\\overline{A}.\\overline{B}$.", ans: "0,2",
+              s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Vì $A, B$ độc lập nên $P(AB) = P(A) \\cdot P(B) = 0,3$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Ta có $P(\\overline{A}.\\overline{B}) = (1-P(A))(1-P(B)) = 1 - (P(A)+P(B)) + P(AB)$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 3</span> Thay số: $1 - 1,1 + 0,3 = 0,2$.</div><div class='font-bold text-blue-600 border-t pt-2'>ĐÁP SỐ: 0,2</div>" },
+            // CÂU 6 ĐẠO HÀM CHI TIẾT
+            { id: "d6_1", q: "Câu 6.1: Tính đạo hàm của hàm số: $y = -2x^{3} + 4\\sqrt{x}$", ans: "-6x^2+2/sqrt(x)", s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Áp dụng đạo hàm tổng: $y' = (-2x^3)' + (4\\sqrt{x})'$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Kết quả: $y' = -6x^2 + 2/\\sqrt{x}$.</div>" },
+            { id: "d6_2", q: "Câu 6.2: Tính đạo hàm của hàm số: $y = (3x^{2} - 1)^{2}$", ans: "12x(3x^2-1)", s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Dùng đạo hàm hàm hợp $u^2$: $y' = 2(3x^2-1) \\cdot (3x^2-1)'$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> Kết quả: $y' = 12x(3x^2-1)$.</div>" },
+            { id: "d6_3", q: "Câu 6.3: Tính đạo hàm của hàm số: $y = -2x^4 + 4x^2 - 1$", ans: "-8x^3+8x", s: "<div class='mb-3'><span class='step-badge'>GIẢI</span> $y' = -8x^3 + 8x$.</div>" },
+            { id: "d6_4", q: "Câu 6.4: Tính đạo hàm: $y = \\frac{x^3}{3} - 2\\sqrt{2}x^2 + 8x - 1$", ans: "x^2-4sqrt(2)x+8", s: "<div class='mb-3'><span class='step-badge'>GIẢI</span> $y' = x^2 - 4\\sqrt{2}x + 8$.</div>" },
+            { id: "d6_5", q: "Câu 6.5: Tính đạo hàm của hàm số: $y = \\frac{2x + 1}{x + 2}$", ans: "3/(x+2)^2", s: "<div class='mb-3'><span class='step-badge'>BƯỚC 1</span> Dùng công thức $(u/v)' = \\frac{u'v-uv'}{v^2}$.</div><div class='mb-3'><span class='step-badge'>BƯỚC 2</span> $y' = \\frac{2(x+2)-1(2x+1)}{(x+2)^2} = \\frac{3}{(x+2)^2}$.</div>" },
+            { id: "d6_6", q: "Câu 6.6: Tính đạo hàm của hàm số: $y = \\frac{x^{2} - x + 1}{x - 1}$", ans: "(x^2-2x)/(x-1)^2", s: "<div class='mb-3'><span class='step-badge'>GIẢI</span> $y' = \\frac{x^2-2x}{(x-1)^2}$.</div>" },
+            { id: "d6_7", q: "Câu 6.7: Tính đạo hàm: $y = \\frac{2}{x^2+x-1}$", ans: "-2(2x+1)/(x^2+x-1)^2", s: "<div class='mb-3'><span class='step-badge'>GIẢI</span> $y' = \\frac{-2(2x+1)}{(x^2+x-1)^2}$.</div>" },
+            { id: "d6_8", q: "Câu 6.8: Tính đạo hàm: $y = \\frac{x^2+x+3}{x^2+x-1}$", ans: "-4(2x+1)/(x^2+x-1)^2", s: "<div class='mb-3'><span class='step-badge'>GIẢI</span> Tách $y = 1 + \\frac{4}{x^2+x-1} \\Rightarrow y' = \\frac{-4(2x+1)}{(x^2+x-1)^2}$.</div>" },
+            // CÁC CÂU 7-13 CHI TIẾT
+            { id: "d7", q: "Câu 7: Xác định hàm số $f(x)=ax^{5}+bx^{3}-2cx^{2}+3x-2$. Biết $f(1)=5; f'(-1)=0; f''(1/2)=5$.", ans: "1", 
+              s: "<div class='math-box'><div class='derivation-step'><h4>1. Tính đạo hàm</h4>$f'(x) = 5ax^4 + 3bx^2 - 4cx + 3$; $f''(x) = 20ax^3 + 6bx - 4c$.</div><div class='derivation-step'><h4>2. Lập hệ</h4>$f(1)=5 \\Rightarrow a+b-2c=4$; $f'(-1)=0 \\Rightarrow 5a+3b+4c=-3$; $f''(0,5)=5 \\Rightarrow 2.5a+3b-4c=5$.</div><div class='derivation-step'><h4>3. Kết quả</h4>Giải hệ: $a=40/9, b=-47/9, c=-43/18$.</div></div>" },
+            { id: "d8", q: "Câu 8: Một chuyển động thẳng xác định bởi phương trình $S(t)=t^{4}-4t^{2}+4$ ($t$: giây, $S$: mét). Tính gia tốc tại thời điểm $t=2$?", ans: "40",
+              s: "<div class='math-box'><div class='derivation-step'><h4>1. Vận tốc</h4>$v(t) = S'(t) = 4t^3 - 8t$.</div><div class='derivation-step'><h4>2. Gia tốc</h4>$a(t) = v'(t) = 12t^2 - 8$.</div><div class='derivation-step'><h4>3. Kết quả</h4>Tại $t=2$, $a(2) = 12 \\cdot 4 - 8 = 40$ m/s².</div></div>" },
+            { id: "d9", q: "Câu 9: Viết tiếp tuyến đồ thị $y = \\frac{2x + 1}{x + 2}$ song song với $d: 3x - y + 2 = 0$.", ans: "y=3x+14", s: "<div class='derivation-step'><h4>1. Hệ số góc</h4>$k=3$. $y' = 3/{(x+2)}^2 = 3 \\Rightarrow (x+2)^2 = 1$.</div><div class='derivation-step'><h4>2. Tọa độ</h4>$x=-1 \\Rightarrow y=-1$ (loại trùng); $x=-3 \\Rightarrow y=5$. PTTT: $y=3x+14$." },
+            { id: "d10", q: "Câu 10: Cho hàm số $y=x^{3}-3x^{2}$ (C). Tìm giá trị tham số $m$ để tiếp tuyến tại điểm có hoành độ bằng 1 song song với $d: y=(m^{2}-4)x+2m-1$.", ans: "-1", 
+              s: "<div class='math-box'><div class='derivation-step'><h4>1. Hệ số góc</h4>$y' = 3x^2-6x \\Rightarrow y'(1) = -3$.</div><div class='derivation-step'><h4>2. Giải m</h4>$m^2-4 = -3 \\Rightarrow m = \\pm 1$.</div><div class='derivation-step'><h4>3. Kiểm tra</h4>$m=1 \\Rightarrow d: y=-3x+1$ (trùng); $m=-1 \\Rightarrow d: y=-3x-3$. ĐÁP SỐ: $m=-1$.</div></div>" },
+            { id: "d11", q: "Câu 11: Cho hàm số $y=x^{4}-2(m+1)x^{2}+m+2$. Tìm $m$ để tiếp tuyến tại $x=1$ vuông góc với $\\Delta: x-4y+1=0$.", ans: "1", 
+              s: "<div class='math-box'><div class='derivation-step'><h4>1. Hệ số góc</h4>$\\Delta: y = 1/4x + 1/4 \\Rightarrow k_{tt} = -4$.</div><div class='derivation-step'><h4>2. Đạo hàm</h4>$y' = 4x^3 - 4(m+1)x \\Rightarrow y'(1) = -4m$.</div><div class='derivation-step'><h4>3. Kết quả</h4>$-4m = -4 \\Rightarrow m=1$.</div></div>" },
+            { id: "d12", q: "Câu 12: Cho hàm số $y=\\frac{x^2-3x+1}{x-2}$. Viết phương trình tiếp tuyến của đồ thị tại điểm có hệ số góc $k=2$.", ans: "y=2x-1;y=2x-5", 
+              s: "<div class='math-box'><div class='derivation-step'><h4>1. Tìm x</h4>$y' = \\frac{x^2-4x+5}{(x-2)^2} = 2 \\Rightarrow x^2-4x+3=0 \\Rightarrow x=1, x=3$.</div><div class='derivation-step'><h4>2. Tiếp tuyến</h4>- $x=1, y=1: y=2x-1$.<br>- $x=3, y=1: y=2x-5$.</div></div>" },
+            { id: "d13", q: "Câu 13: Cho hàm số $y=\\frac{2x+2}{x-1}$. Viết phương trình tiếp tuyến biết tiếp tuyến tạo với hai trục tọa độ một tam giác vuông cân.", ans: "y=-x+7;y=-x-1", 
+              s: "<div class='math-box'><div class='derivation-step'><h4>1. Hệ số góc</h4>$k = \\pm 1$. Vì $y' < 0$ nên $k = -1$.</div><div class='derivation-step'><h4>2. Hoành độ</h4>$y' = -4/(x-1)^2 = -1 \\Rightarrow x=3, x=-1$.</div><div class='derivation-step'><h4>3. Kết quả</h4>Hai tiếp tuyến: $y=-x+7$ và $y=-x-1$.</div></div>" }
+        ];
+
+        window.switchTab = function(tab) {
+            document.getElementById('tabC').className = tab === 'C' ? 'flex-1 py-4 font-extrabold rounded-xl transition-all tab-active text-sm md:text-base' : 'flex-1 py-4 font-extrabold rounded-xl transition-all text-slate-400 hover:text-slate-600 text-sm md:text-base';
+            document.getElementById('tabD').className = tab === 'D' ? 'flex-1 py-4 font-extrabold rounded-xl transition-all tab-active text-sm md:text-base' : 'flex-1 py-4 font-extrabold rounded-xl transition-all text-slate-400 hover:text-slate-600 text-sm md:text-base';
+            window.renderContent(tab);
+        };
+
+        window.renderContent = function(tab) {
+            const list = document.getElementById('questionList');
+            list.innerHTML = '';
+            const items = tab === 'C' ? dataC : dataD;
+
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = "bg-white p-6 md:p-10 rounded-[2.5rem] shadow-sm border border-slate-200 solution-card hover:shadow-xl transition-all";
+                
+                let html = '<div class="mb-8 text-slate-800 font-bold text-lg md:text-xl leading-relaxed italic">' + item.q + '</div>';
+                html += '<div class="flex flex-col md:flex-row gap-4 mb-8 bg-slate-50 p-6 md:p-8 rounded-3xl border border-slate-100 shadow-inner">' +
+                    '<input type="text" id="input-' + item.id + '" placeholder="Nhập đáp số..." class="bg-white border border-slate-200 p-5 rounded-2xl w-full md:w-80 font-bold text-slate-700 focus:border-blue-500 transition-all">' +
+                    '<button onclick="window.checkAnswer(\'' + item.id + '\', \'' + item.ans + '\')" class="bg-blue-600 text-white font-black px-10 py-5 rounded-2xl hover:bg-blue-700 active:scale-95 transition-all shadow-md">Kiểm tra</button>' +
+                    '<div id="fb-' + item.id + '" class="flex items-center text-lg font-black tracking-tight ml-2"></div></div>';
+                html += '<button onclick="window.toggleSolution(\'' + item.id + '\')" class="group flex items-center gap-3 text-slate-400 font-bold text-sm hover:text-blue-600 transition-all uppercase px-2 tracking-tighter">' +
+                    '<span id="txt-' + item.id + '">XEM HƯỚNG DẪN GIẢI CHI TIẾT</span>' +
+                    '<svg id="ic-' + item.id + '" class="h-4 w-4 transition-transform group-hover:translate-y-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" /></svg></button>';
+                html += '<div id="sol-' + item.id + '" class="hidden-solution mt-8 pt-8 border-t border-slate-100 text-slate-600 text-base leading-relaxed animate-in fade-in slide-in-from-top-2">' +
+                    '<div class="bg-blue-50/50 p-6 md:p-8 rounded-[2rem] border border-blue-100/50 shadow-inner">' + item.s + '</div></div>';
+                
+                card.innerHTML = html;
+                list.appendChild(card);
+            });
+            renderMathInElement(list, { delimiters: [{left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false}] });
+        };
+
+        window.checkAnswer = function(id, ans) {
+            const field = document.getElementById("input-" + id);
+            const val = field.value.trim().toLowerCase().replace(',', '.');
+            const fb = document.getElementById("fb-" + id);
+            if (!val) { fb.innerHTML = "<span class='text-amber-500'>Vui lòng nhập đáp số!</span>"; return; }
+            if (val === ans.toLowerCase().replace(',', '.') || ans.toLowerCase().includes(val)) {
+                fb.innerHTML = "<span class='text-emerald-500'>✓ CHÍNH XÁC</span>";
+                field.classList.add('border-emerald-500', 'bg-emerald-50', 'correct-anim');
+            } else {
+                fb.innerHTML = "<span class='text-rose-500'>✗ CHƯA ĐÚNG</span>";
+                field.classList.add('border-rose-500', 'bg-rose-50');
+            }
+        };
+
+        window.toggleSolution = function(id) {
+            const sol = document.getElementById("sol-" + id);
+            const txt = document.getElementById("txt-" + id);
+            const ic = document.getElementById("ic-" + id);
+            if (!sol) return;
+            if (sol.style.display === "block") {
+                sol.style.display = "none";
+                txt.innerText = "XEM HƯỚNG DẪN GIẢI CHI TIẾT";
+                ic.style.transform = "rotate(0deg)";
+            } else {
+                sol.style.display = "block";
+                txt.innerText = "ẨN HƯỚNG DẪN GIẢI";
+                ic.style.transform = "rotate(180deg)";
+            }
+        };
+
+        window.onload = () => { window.renderContent('C'); };
+    </script>
+</body>
+</html>
